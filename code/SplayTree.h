@@ -22,6 +22,7 @@ public:
     void print(ostream &out) { print(out, root); }
     T findMin() { return findMin(root)->data; }
     T findMax() { return findMax(root)->data; }
+    ~SplayTree() { removeNode(root); }
 
 private:
     Node* root;
@@ -33,6 +34,7 @@ private:
     void replace(Node *old_node, Node *new_node);
     Node* findMin(Node *start_node);
     Node* findMax(Node *start_node);
+    void removeNode(Node* start_node);
 };
 
 template<class T>
@@ -210,4 +212,13 @@ void SplayTree<T>::print(ostream &out, Node *start_node, int level) {
         out << '\t';
     out << start_node->data << endl;
     print(out, start_node->left, level + 1);
+}
+
+template<class T>
+void SplayTree<T>::removeNode(Node *start_node) {
+    if (start_node == nullptr)
+        return;
+    removeNode(start_node->left);
+    removeNode(start_node->right);
+    delete start_node;
 }
