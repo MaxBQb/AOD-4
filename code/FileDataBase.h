@@ -9,18 +9,19 @@ template <class E>
 class FileDataBase {
 public:
     struct Entry {
+        // Поле данных
         virtual E read(istream& fin) = 0;
         virtual void print(ostream& fout) const = 0;
-        virtual E generate() = 0;
+        virtual E generate() = 0; // Создать случайное наполнение
     };
 
     struct Engine {
+        // Система отвечающая за хранение/доступ/изменение пар ключ:смещение
         virtual int find(E key) = 0;
         virtual bool insert(E key, int value) = 0;
         virtual bool remove(E key) = 0;
         virtual void print(ostream& out) = 0;
-        virtual void onLoad() {};
-        virtual ~Engine() {};
+        virtual void onLoad() {}; // Событие завершения загрузки
     };
 
     FileDataBase(string path, Engine *engine, Entry *field_example):

@@ -5,6 +5,8 @@
 using namespace std::chrono;
 
 class Watch {
+    // Секундомер, может вести единичные замеры
+    // или собирать статистику из нескольких интервалов времени
     using clock = high_resolution_clock;
     duration<long, nano> _session;
     unsigned _intervals_count;

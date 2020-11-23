@@ -7,6 +7,7 @@ using namespace std;
 template <class T>
 class DataBaseTester {
     struct OUTPUT {
+        // Выключаемый вывод
         bool silent_mode = false;
 
         template <class E>
@@ -34,6 +35,8 @@ public:
     void testSearching(T key);
     void testInsertion(T key);
     void testRemoving(T key);
+
+    // Сквозной доступ к полю private структуры, не уверен, что хорошо так делать.
     bool& silentMode() { return out.silent_mode; }
 };
 
@@ -82,7 +85,7 @@ void DataBaseTester<T>::test(typename FileDataBase<T>::Engine *engine, unsigned 
     if (!out.silent_mode)
         db.showStructure();
 
-    delete engine;
+    delete engine; // опять же не уверен, что хорошо так делать
 }
 
 template<class T>
@@ -115,6 +118,7 @@ void DataBaseTester<T>::testInsertion(T key) {
     out << "Attempt to proof insertion: ";
     int search_result = db.getEngine()->find(key);
     if (search_result == -1)
+        // Если что-то идёт не так об этом точно стоит знать
         cout << "ERROR (inserted key NOT found!)\n";
     else
         out << "SUCCESS (inserted key found)\n";
@@ -148,7 +152,6 @@ T DataBaseTester<T>::generateKey(bool existing) {
         return keys[rand()%keys.size()];
     }
 
-    // Необходимое зло.. так сказать..
     T value;
     do { value = db.getCurrentEntry()->generate(); }
     while (db.getEngine()->find(value) != -1);

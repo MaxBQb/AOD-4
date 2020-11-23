@@ -2,6 +2,7 @@
 
 template <class K, class V>
 struct Pair {
+    // Пара, в которой сравнения идут только по ключу
     K key;
     V value;
     bool operator>(const Pair &rhs) const { return key > rhs.key; }

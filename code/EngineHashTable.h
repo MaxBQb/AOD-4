@@ -2,6 +2,9 @@
 #include "FileDataBase.h"
 #include "HashTable.h"
 
+/* Так как моя реализация хеш-таблицы может работать только
+ * с ключами представленными int, то и доступен такой Engine
+ * только для файловой бд работающей с int */
 class EngineHashTable: public FileDataBase<int>::Engine {
 public:
     int find(int key) override {
